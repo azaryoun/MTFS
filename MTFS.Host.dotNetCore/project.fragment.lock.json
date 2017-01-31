@@ -1,0 +1,97 @@
+{
+  "version": 2,
+  "exports": {
+    "MTFS.Business.Services/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.6",
+      "compile": {
+        "bin/Debug/MTFS.Business.Services.dll": {}
+      },
+      "runtime": {
+        "../packages/AutoMapper.5.2.0/lib/net45/AutoMapper.dll": {},
+        "../packages/EFSecondLevelCache.1.1.5.0/lib/net45/EFSecondLevelCache.dll": {},
+        "../packages/EntityFramework.6.1.3/lib/net45/EntityFramework.SqlServer.dll": {},
+        "../packages/EntityFramework.6.1.3/lib/net45/EntityFramework.dll": {},
+        "../packages/EntityFramework.Extended.6.1.0.168/lib/net45/EntityFramework.Extended.dll": {},
+        "bin/Debug/MTFS.Business.Services.dll": {}
+      },
+      "contentFiles": {
+        "bin/Debug/MTFS.Business.Services.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    },
+    "MTFS.Business.Domain/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.5.2",
+      "compile": {
+        "bin/Debug/MTFS.Business.Domain.dll": {}
+      },
+      "runtime": {
+        "bin/Debug/MTFS.Business.Domain.dll": {}
+      },
+      "contentFiles": {
+        "bin/Debug/MTFS.Business.Domain.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    },
+    "MTFS.Business.Dtos/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.6",
+      "compile": {
+        "bin/Debug/MTFS.Business.Dtos.dll": {}
+      },
+      "runtime": {
+        "bin/Debug/MTFS.Business.Dtos.dll": {}
+      },
+      "contentFiles": {
+        "bin/Debug/MTFS.Business.Dtos.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    },
+    "MTFS.DAL/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.6",
+      "compile": {
+        "bin/Debug/MTFS.DAL.dll": {}
+      },
+      "runtime": {
+        "../packages/EntityFramework.6.1.3/lib/net45/EntityFramework.SqlServer.dll": {},
+        "../packages/EntityFramework.6.1.3/lib/net45/EntityFramework.dll": {},
+        "bin/Debug/MTFS.DAL.dll": {}
+      },
+      "contentFiles": {
+        "bin/Debug/MTFS.DAL.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    },
+    "MTFS.Utilities/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.6",
+      "compile": {
+        "bin/Debug/MTFS.Utilities.dll": {}
+      },
+      "runtime": {
+        "bin/Debug/MTFS.Utilities.dll": {}
+      },
+      "contentFiles": {
+        "bin/Debug/MTFS.Utilities.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    }
+  }
+}

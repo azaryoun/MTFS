@@ -1,0 +1,401 @@
+﻿<div data-ng-controller="negotiationplanrouteController">
+
+    <div id="content">
+        <section id="widget-grid" class="">
+
+            <div class="row">
+
+                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12 sortable-grid ui-sortable">
+                    <div class="alert alert-success fade in" data-ng-show="showInsertMessage">
+
+                        <i class="fa-fw fa fa-check"></i>
+                        The new record inserted successfully.
+                    </div>
+
+                    <div class="alert alert-info fade in" data-ng-show="showUpdateMessage">
+
+                        <i class="fa-fw fa fa-check"></i>
+                        The record edited successfully.
+                    </div>
+
+                    <div class="jarviswidget jarviswidget-color-red jarviswidget-sortable" id="wid-id-0" data-widget-editbutton="false" data-widget-attstyle="jarviswidget-color-red" role="widget" style="">
+
+                        <div role="content">
+
+                            <div class="widget-body no-padding">
+
+                                <div id="dt_basic_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                                    <div class="dt-toolbar">
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div id="dt_basic_filter" class="dataTables_filter">
+                                                <label>
+                                                    <a title="Search the criteria" class="btn input-group-addon" style="float:left" data-ng-click="searchRecords()">  <i class="glyphicon glyphicon-search"></i></a>
+
+                                                    <input type="search" data-ng-model="filter" class="form-control" placeholder="From Location ..." aria-controls="dt_basic" />
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-success" id="open" style="float:right;width:80px" data-ng-click="newRecord()" title="Create a new record">
+                                            <i class="fa fa-plus"></i>
+                                            Create
+                                        </button>
+                                    </div>
+                                    <div class="dt-toolbar">
+                                        <div class="col-sm-6 col-xs-12 hidden-xs" data-ng-show="showUp">
+                                            <div class="dataTables_info" id="dt_basic_info" role="status" aria-live="polite">
+                                                <a style="cursor:pointer;" data-ng-click="goUp()"><h5>Negotiation Plan: {{title}} </h5></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table id="tblMain" class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="dt_basic_info" style="width: 100%;">
+                                        <thead>
+                                            <tr role="row">
+                                                <th style="width:43px;"><i class="fa fa-fw fa fa-hashtag text-muted hidden-md hidden-sm hidden-xs"></i></th>
+                                                <th>Location Name From</th>
+                                                <th>Location Name To</th>
+                                                <th>Transport Type</th>
+                                                <th>Negotiation Plan RouteCF</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr data-ng-repeat="record in records" role="row" data-ng-dblclick="editRecord(record)" data-ng-class="getClass($index)">
+
+                                                <td style="text-align:center">
+                                                    {{ fromRow + $index  }}
+                                                </td>
+                                                <td>
+                                                    {{record.fromLocationName }}
+                                                </td>
+                                                <td>
+                                                    {{record.toLocationName }}
+                                                </td>
+                                                <td>
+                                                    {{record.transporttypeName }}
+                                                </td>
+                                                <td>
+                                                    <a data-ng-click="subAction1(record.id, title,parent_ParentId)"><i class="fa fa-lg fa-fw fa-plane"></i><span class="menu-item-parent">Negotiation Plans </span></a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <div class="dt-toolbar-footer">
+
+                                        <div class="col-sm-6 col-xs-12 hidden-xs">
+                                            <div class="dataTables_info" id="dt_basic_info" role="status" aria-live="polite">
+                                                Showing records between {{fromRow}} and {{toRow}} from total {{totalRecordCount}} record(s).
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-12 col-sm-6">
+
+                                            <div class="input-group">
+                                                <a title="First Page" class="btn input-group-addon" data-ng-click="getFirstPage()" style="float:left">  <i class="fa fa-fast-backward"></i> </a>
+                                                <a title="Previous Page" class="btn input-group-addon" data-ng-click="getPrevPage()" style="float:left">  <i class="fa fa-backward"></i></a>
+                                                <input type="number" data-ng-model="currentPage" class="form-control input-sm" title="Page No." style="width:100px;text-align:center;float:left" value="1" maxlength="8" />
+                                                <a title="Goto the page" class="btn input-group-addon btn-flat" data-ng-click="getCurrentPage()" style="float:left"> <i class="fa fa-hand-o-up"></i> </a>
+                                                <a title="Next Page" class="btn input-group-addon" style="float:left" data-ng-click="getNextPage()">  <i class="fa fa-forward"></i> </a>
+                                                <a title="Last Page" class="btn input-group-addon" style="float:left" data-ng-click="getLastPage()">  <i class="fa fa-fast-forward"></i></a>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+    </div>
+
+    <div id="divNew" class="modal fade" role="dialog">
+        <div class="modal-dialog" style="width:700px">
+
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="jarviswidget jarviswidget-sortable" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false" role="widget">
+
+                        <header role="heading">
+                            <div class="jarviswidget-ctrls" role="menu">
+                                <a href="javascript:void(0);" class="button-icon jarviswidget-delete-btn close" data-dismiss="modal" rel="tooltip" title="" data-placement="bottom" data-original-title="Delete">
+                                    <i class="fa fa-times">
+
+                                    </i>
+                                </a>
+                            </div>
+
+                            <h2>{{modalTitle}} </h2>
+
+                            <span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span>
+                        </header>
+
+                        <div role="content">
+
+                            <!-- end widget edit box -->
+                            <!-- widget content -->
+                            <div class="widget-body no-padding">
+
+                                <form id="mainFormNew" class="smart-form" name="mainFormNew" novalidate="novalidate" data-ng-submit="insertRecord()">
+
+                                    <fieldset>
+
+                                        <div class="row ">
+
+                                            <section class="col col-6">
+
+                                                <div class='select'>
+
+                                                    <label class="label">From Location<span class="required">*</span></label>
+
+                                                    <div class='select' data-ng-class="{'has-error': mainFormNew.fromLocations.$invalid && mainFormNew.fromLocations.$dirty}">
+
+                                                        <select data-ng-model="record.fromLocationId" name="fromLocations " data-ng-options="item.id as item.text for item in record.fromLocations" required>
+                                                            <option value="">(Select a From Locations )</option>
+                                                        </select><i></i>
+
+                                                        <div data-ng-show="mainFormNew.fromLocations.$invalid && mainFormNew.fromLocations.$dirty">
+                                                            <span class="help-block" data-ng-show="mainFormNew.fromLocations.$error.required">A place must be selected!</span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </section>
+
+                                            <section class="col col-6">
+
+                                                <div class='select'>
+
+                                                    <label class="label">To Location<span class="required">*</span></label>
+
+                                                    <div class='select' data-ng-class="{'has-error': mainFormNew.toLocations.$invalid && mainFormNew.toLocations.$dirty}">
+
+                                                        <select data-ng-model="record.toLocationId" name="toLocations" data-ng-options="item.id as item.text for item in record.toLocations" required>
+                                                            <option value="">(Select a To Locations )</option>
+                                                        </select><i></i>
+
+                                                        <div data-ng-show="mainFormNew.toLocations.$invalid && mainFormNew.toLocations.$dirty">
+                                                            <span class="help-block" data-ng-show="mainFormNew.toLocations.$error.required">A place must be selected!</span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </section>
+                                        
+                                        </div>
+
+                                        <div class="row ">
+
+                                            <section class="col col-6">
+
+                                                <div class='select'>
+
+                                                    <label class="label">Transport Type <span class="required">*</span></label>
+
+                                                    <div class='select' data-ng-class="{'has-error': mainFormNew.transporttypes.$invalid && mainFormNew.transporttypes.$dirty}">
+
+                                                        <select data-ng-model="record.transporttypeId" name="transporttypes" data-ng-options="item.id as item.text for item in record.transporttypes" required>
+                                                            <option value="">(Select a From Transport Types )</option>
+                                                        </select><i></i>
+
+                                                        <div data-ng-show="mainFormNew.transporttypes.$invalid && mainFormNew.transporttypes.$dirty">
+                                                            <span class="help-block" data-ng-show="mainFormNew.transporttypes.$error.required">A Transport type must be selected!</span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </section>
+
+                                            <section class="col col-6"> 
+
+                                            </section>
+
+                                        </div>
+
+                                    </fieldset>
+
+                                    <footer>
+
+                                        <button type="submit" id="save" class="btn btn-primary" title="Save the new record" data-ng-disabled="mainFormNew.$invalid || mainFormNew.transporttypes.$pristine || mainFormNew.fromLocations.$pristine || mainFormNew.toLocations.$pristine">
+                                            <i class="fa fa-check"></i>
+                                            Save
+                                        </button>
+
+                                        <button type="button" id="cancel" class="btn btn-default" style="float:right" data-dismiss="modal" title="Close the window without saving">
+                                            <i class="fa fa-times"></i>
+                                            Close
+                                        </button>
+
+
+                                    </footer>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div id="divEdit" class="modal fade" role="dialog">
+        <div class="modal-dialog" style="width:700px">
+
+
+            <div class="modal-content">
+
+                <div class="modal-body">
+
+                    <div class="jarviswidget jarviswidget-sortable" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false" role="widget">
+
+                        <header role="heading">
+                            <div class="jarviswidget-ctrls" role="menu">
+
+                                <a href="javascript:void(0);" class="button-icon jarviswidget-delete-btn close" data-dismiss="modal" rel="tooltip" title="" data-placement="bottom" data-original-title="Delete">
+                                    <i class="fa fa-times">
+
+                                    </i>
+                                </a>
+                            </div>
+
+                            <h2>{{modalTitle}} </h2>
+
+                            <span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span>
+                        </header>
+
+
+                        <div role="content">
+                            <!-- end widget edit box -->
+                            <!-- widget content -->
+                            <div class="widget-body no-padding">
+
+                                <form id="mainFormEdit" class="smart-form" name="mainFormEdit" novalidate="novalidate" data-ng-submit="updateRecord()">
+                                     
+                                    <fieldset>
+
+                                        <div class="row ">
+
+                                            <section class="col col-6">
+
+                                                <div class='select'>
+
+                                                    <label class="label">From Location<span class="required">*</span></label>
+
+                                                    <div class='select' data-ng-class="{'has-error': mainFormEdit.fromLocations.$invalid && mainFormEdit.fromLocations.$dirty}">
+
+                                                        <select data-ng-model="record.fromLocationId" name="fromLocations " data-ng-options="item.id as item.text for item in record.fromLocations" required>
+                                                            <option value="">(Select a From Locations )</option>
+                                                        </select><i></i>
+
+                                                        <div data-ng-show="mainFormEdit.fromLocations.$invalid && mainFormEdit.fromLocations.$dirty">
+                                                            <span class="help-block" data-ng-show="mainFormEdit.fromLocations.$error.required">A place must be selected!</span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </section>
+
+                                            <section class="col col-6">
+
+                                                <div class='select'>
+
+                                                    <label class="label">To Location<span class="required">*</span></label>
+
+                                                    <div class='select' data-ng-class="{'has-error': mainFormEdit.toLocations.$invalid && mainFormEdit.toLocations.$dirty}">
+
+                                                        <select data-ng-model="record.toLocationId" name="toLocations" data-ng-options="item.id as item.text for item in record.toLocations" required>
+                                                            <option value="">(Select a To Locations )</option>
+                                                        </select><i></i>
+
+                                                        <div data-ng-show="mainFormEdit.toLocations.$invalid && mainFormEdit.toLocations.$dirty">
+                                                            <span class="help-block" data-ng-show="mainFormEdit.toLocations.$error.required">A place must be selected!</span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </section>
+
+                                        </div>
+
+                                        <div class="row ">
+
+                                            <section class="col col-6">
+
+                                                <div class='select'>
+
+                                                    <label class="label">Transport Type <span class="required">*</span></label>
+
+                                                    <div class='select' data-ng-class="{'has-error': mainFormEdit.transporttypes.$invalid && mainFormEdit.transporttypes.$dirty}">
+
+                                                        <select data-ng-model="record.transporttypeId" name="transporttypes" data-ng-options="item.id as item.text for item in record.transporttypes" required>
+                                                            <option value="">(Select a From Transport Types )</option>
+                                                        </select><i></i>
+
+                                                        <div data-ng-show="mainFormEdit.transporttypes.$invalid && mainFormEdit.transporttypes.$dirty">
+                                                            <span class="help-block" data-ng-show="mainFormEdit.transporttypes.$error.required">A Transport type must be selected!</span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </section>
+
+                                            <section class="col col-6"></section>
+
+                                        </div>
+
+                                    </fieldset>
+
+                                    <footer>
+
+                                        <button type="submit" id="save" class="btn btn-primary" title="Save the current record" data-ng-disabled="mainFormEdit.$invalid">
+                                            <i class="fa fa-check"></i>
+                                            Save
+                                        </button>
+
+                                        <button type="button" id="cancel" class="btn btn-default" style="float:right" data-dismiss="modal" title="Close the window without saving">
+                                            <i class="fa fa-times"></i>
+                                            Close
+                                        </button>
+
+                                    </footer>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+

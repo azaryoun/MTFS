@@ -1,0 +1,371 @@
+﻿<!DOCTYPE html>
+<html lang="fa" data-ng-app="mainApplication" data-ng-controller="indexController">
+<head>
+    <meta charset="utf-8">
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">-->
+
+   
+    <title>{{ pageTitle }}</title>
+    <meta name="description" content="">
+    <meta name="author" content="Keiwan Azaryoun">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="/Content/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/Content/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/Content/smartadmin-production-plugins.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/Content/smartadmin-production.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/Content/smartadmin-skins.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/Content/smartadmin-rtl.min.css">
+    <link href="/Content/jquery.Bootstrap-PersianDateTimePicker.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/Content/angularjs-datetime-picker.css" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="/Content/Site.css">
+
+    <link rel="shortcut icon" href="/Images/favicon/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/Images/favicon/favicon.ico" type="image/x-icon">
+
+
+    <link rel="apple-touch-icon" href="/Images/splash/sptouch-icon-iphone.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/Images/splash/touch-icon-ipad.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/Images/splash/touch-icon-iphone-retina.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/Images/splash/touch-icon-ipad-retina.png">
+
+    <!-- iOS web-app metas : hides Safari UI Components and Changes Status Bar Appearance -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="apple-touch-startup-image" href="/Images/splash/ipad-landscape.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
+    <link rel="apple-touch-startup-image" href="/Images/splash/ipad-portrait.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
+    <link rel="apple-touch-startup-image" href="/Images/splash/iphone.png" media="screen and (max-device-width: 320px)">
+
+    <style>
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<!--
+
+-->
+
+
+
+<body>
+
+    <header id="header">
+        <div id="logo-group">
+            <span id="logo"> 
+              
+           
+                <img data-ng-if="!userInfo.companyLogo"  src="/Images/logo.png" alt="Satras">
+                <img data-ng-if="userInfo.companyLogo" ng-src="data:{{userInfo.companyLogoMime}};base64,{{ userInfo.companyLogo  }}"  alt="{{userInfo.companyName}}" />
+
+            
+             </span>
+            <span id="activity" class="activity-dropdown"> <i class="fa fa-user"></i> <b class="badge"> 21 </b> </span>
+
+            <div class="ajax-dropdown">
+
+                <!-- the ID links are fetched via AJAX to the ajax container "ajax-notifications" -->
+                <div class="btn-group btn-group-justified" data-toggle="buttons">
+                    <label class="btn btn-default">
+                        <input type="radio" name="activity" id="ajax/notify/mail.html">
+                        Notifications
+                    </label>
+                    <label class="btn btn-default">
+                        <input type="radio" name="activity" id="ajax/notify/notifications.html">
+                        Messages
+                    </label>
+
+                </div>
+
+                <!-- notification content -->
+                <div class="ajax-notifications custom-scroll">
+
+                    <div class="alert alert-transparent">
+                        <h4>There is no notification</h4>
+                        This blank page message helps protect your privacy, or you can show the first message here automatically.
+                    </div>
+
+                    <i class="fa fa-lock fa-4x fa-border"></i>
+
+                </div>
+
+
+            </div>
+            <!-- END AJAX-DROPDOWN -->
+        </div>
+
+      
+        <div class="pull-right">
+
+            <!-- collapse menu button -->
+            <div id="hide-menu" class="btn-header pull-right">
+                <span> <a href="javascript:void(0);" data-action="toggleMenu" title="Toggle menu"><i class="fa fa-reorder"></i></a> </span>
+            </div>
+            <!-- end collapse menu -->
+            <!-- #MOBILE -->
+            <!-- Top menu profile link : this shows only when top menu is active -->
+            <ul id="mobile-profile-img" class="header-dropdown-list hidden-xs padding-5">
+                <li class="">
+                    <a href="#" class="dropdown-toggle no-margin userdropdown" data-toggle="dropdown">
+                        <img src="/Images/avatars/sunny.png" alt="John Doe" class="online" />
+                    </a>
+                    <ul class="dropdown-menu pull-right">
+                        <li>
+                            <a href="javascript:void(0);" class="padding-10 padding-top-0 padding-bottom-0"><i class="fa fa-cog"></i> Setting</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="profile.html" class="padding-10 padding-top-0 padding-bottom-0"> <i class="fa fa-user"></i> <u>P</u>rofile</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="javascript:void(0);" class="padding-10 padding-top-0 padding-bottom-0" data-action="toggleShortcut"><i class="fa fa-arrow-down"></i> <u>S</u>hortcut</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="javascript:void(0);" class="padding-10 padding-top-0 padding-bottom-0" data-action="launchFullscreen"><i class="fa fa-arrows-alt"></i> Full <u>S</u>creen</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="login.html" class="padding-10 padding-top-5 padding-bottom-5" data-action="userLogout"><i class="fa fa-sign-out fa-lg"></i> <strong><u>L</u>ogout</strong></a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <!-- logout button -->
+            <div id="logout" class="btn-header transparent pull-right">
+                <span> <a data-ng-click="Logout()" title="Log out"><i class="fa fa-sign-out"></i></a> </span>
+            </div>
+
+            <div id="fullscreen" class="btn-header transparent pull-right">
+                <span> <a href="javascript:void(0);" data-action="launchFullscreen" title="Full Screen"><i class="fa fa-arrows-alt"></i></a> </span>
+            </div>
+            <!-- end fullscreen button -->
+
+
+
+        </div>
+        <!-- end pulled right: nav area -->
+
+    </header>
+    <!-- END HEADER -->
+    <!-- Left panel : Navigation area -->
+    <!-- Note: This width of the aside area can be adjusted through LESS variables -->
+    <aside id="left-panel">
+
+        <!-- User info -->
+        <div class="login-info">
+            <span>
+                <!-- User image size is adjusted inside CSS, it should stay as it -->
+
+
+                <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
+                    <span title="{{userInfo.companyName}}  ({{userInfo.username}})">
+                        {{userInfo.fullName}}
+                    </span>
+                    <i class="fa fa-angle-down"></i>
+                </a>
+
+            </span>
+        </div>
+        <!-- end user info -->
+        <!-- NAVIGATION : This navigation is also responsive-->
+        <nav>
+
+            <ul>
+
+                <li data-ng-repeat="item in menutitlesDto" data-ng-class="getMenuTitleClass(item)" my-post-repeat-directive>
+                    <a href="{{getHref(item)}}" data-ng-click="resetSetting();" title="{{item.pageTitle}}">
+                        <i class="{{item.titleStyle}}"></i>
+                        <span class="menu-item-parent">{{item.titleText}} </span>
+                        <b data-ng-if="item.menuitemsDto.length" class="collapse-sign"><em class="fa fa-plus-square-o"></em></b>
+                    </a>
+
+                    <ul data-ng-if="item.menuitemsDto.length">
+                        <li data-ng-repeat="itemMenuitem in item.menuitemsDto" class="ng-scope">
+                            <a href="{{getHref(itemMenuitem)}}" data-ng-click="resetSetting();" title="{{itemMenuitem.pageTitle}}">
+                                <i class="{{itemMenuitem.itemStyle}}"></i>
+                                <span class="menu-item-parent ng-binding"> {{itemMenuitem.itemText}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li> 
+
+            </ul>
+
+        </nav>
+
+
+        <span class="minifyme" data-action="minifyMenu">
+            <i class="fa fa-arrow-circle-left hit"></i>
+        </span>
+
+    </aside>
+    <!-- END NAVIGATION -->
+    <!-- MAIN PANEL -->
+    <div id="main" role="main">
+
+        <!-- RIBBON -->
+        <div id="ribbon">
+
+
+            <ol class="breadcrumb">
+                
+                <li>{{pageTitle}}</li>
+                
+            </ol>
+
+        </div>
+     
+        <div id="contentDiv" >
+
+            <div  class="page" data-ng-view></div>
+
+        </div>
+        
+
+    </div>
+
+    <div class="page-footer">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <span class="txt-color-white">Satras MTFS. <span class="hidden-xs"> </span>All rights reserved. © 2016 - 2017</span>
+            </div>
+
+        </div>
+    </div>
+   
+     <div id="shortcut">
+        <ul>
+            <li>
+                <a href="inbox.html" class="jarvismetro-tile big-cubes bg-color-blue"> <span class="iconbox"> <i class="fa fa-envelope fa-4x"></i> <span> Negotiations</span> </span> </a>
+            </li>
+            <li>
+                <a href="calendar.html" class="jarvismetro-tile big-cubes bg-color-orangeDark"> <span class="iconbox"> <i class="fa fa-shopping-basket fa-4x"></i> <span> Invoices</span> </span> </a>
+            </li>
+            <li>
+                <a href="profile.html" class="jarvismetro-tile big-cubes bg-color-pinkDark"> <span class="iconbox"> <i class="fa fa-user fa-4x"></i> <span>Profile </span> </span> </a>
+            </li>
+            <li>
+                <a href="#/menus/Administration changePassword" class="jarvismetro-tile big-cubes bg-color-greenLight"> <span class="iconbox"> <i class="fa fa-key fa-4x"></i> <span> Change password</span> </span> </a>
+            </li>
+        </ul>
+    </div>
+    <!-- END SHORTCUT AREA -->
+
+    <script src="/Scripts/plugin/pace/pace.min.js"></script>
+    <script src="/Scripts/libs/jquery-2.1.1.min.js"></script>
+    <script src="/Scripts/libs/jquery-ui-1.10.3.min.js"></script>
+    <script src="/Scripts/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script>
+    <script src="/Scripts/bootstrap/bootstrap.min.js"></script>
+    <script src="/Scripts/notification/SmartNotification.min.js"></script>
+    <script src="/Scripts/smartwidgets/jarvis.widget.min.js"></script>
+    <script src="/Scripts/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js"></script>
+    <script src="/Scripts/plugin/sparkline/jquery.sparkline.min.js"></script>
+    <script src="/Scripts/plugin/select2/select2.min.js"></script>
+    <script src="/Scripts/plugin/bootstrap-slider/bootstrap-slider.min.js"></script>
+    <script src="/Scripts/plugin/msie-fix/jquery.mb.browser.min.js"></script>
+    <script src="/Scripts/plugin/fastclick/fastclick.min.js"></script>
+
+
+    <!--[if IE 8]>
+
+    <h1>Your browser is out of date, please update your browser by going to www.microsoft.com/download</h1>
+
+    <![endif]-->
+
+    <script src="/Scripts/smart-chat-ui/smart.chat.ui.min.js"></script>
+    <script src="/Scripts/smart-chat-ui/smart.chat.manager.min.js"></script>
+
+
+    <script src="/Scripts/plugin/flot/jquery.flot.cust.min.js"></script>
+    <script src="/Scripts/plugin/flot/jquery.flot.resize.min.js"></script>
+    <script src="/Scripts/plugin/flot/jquery.flot.time.min.js"></script>
+    <script src="/Scripts/plugin/flot/jquery.flot.tooltip.min.js"></script>
+
+
+
+    <script src="/Scripts/smartwidgets/jarvis.widget.min.js"></script>
+    <script src="/Scripts/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js"></script>
+    <script src="/Scripts/plugin/sparkline/jquery.sparkline.min.js"></script>
+
+    <script src="/Scripts/plugin/flot/jquery.flot.cust.min.js"></script>
+    <script src="/Scripts/plugin/flot/jquery.flot.resize.min.js"></script>
+    <script src="/Scripts/plugin/flot/jquery.flot.time.min.js"></script>
+    <script src="/Scripts/plugin/flot/jquery.flot.tooltip.min.js"></script>
+
+
+   
+    <script src="/Scripts/plugin/moment/moment.min.js"></script>
+   
+    <script src="/Scripts/angular/angular.min.js"></script>
+    <script src="/Scripts/angular/angular-route.min.js"></script>
+    <script src="/Scripts/angular/angular-animate.min.js"></script>
+
+
+      <script src="/Scripts/app.config.js"></script>
+
+
+    <script src="/Scripts/app.min.js"></script>
+
+    <script src="/Scripts/plugin/vectormap/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="/Scripts/plugin/vectormap/jquery-jvectormap-world-mill-en.js"></script>
+
+
+    <script src="/Scripts/PKal/calendar.js"></script>
+    <script src="/Scripts/PKal/bootstrap.min_cal.js"></script>
+    <script src="/Scripts/PKal/jquery.Bootstrap-PersianDateTimePicker.js"></script>
+    <script src="/Scripts/PKal/angularjs-datetime-picker.js"></script>
+
+    <script src="/Scripts/plugin/vectormap/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="/Scripts/plugin/vectormap/jquery-jvectormap-world-mill-en.js"></script>
+
+    <script src="/Scripts/plugin/fullcalendar/jquery.fullcalendar.min.js"></script>
+
+
+    <div id="myLoadingModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myLoadingModalLabel">Receiving data from server...</h4>
+                </div>
+
+                <div class="modal-body text-center">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                            Please wait !
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- the angular part and sub pages js -->
+    <script src="module.js"></script>    
+    <script src="indexController.js"></script>
+    <script src="homeController.js"></script>
+    <script src="Administration/Accessgroup/accessgroupController.js"></script>
+    <script src="Administration/changePasswordController.js"></script>
+    <script src="Administration/User/userController.js"></script>
+    <script src="Administration/logoUploadController.js"></script> 
+    <script src="BasicInfo/Location/locationController.js"></script> 
+    <script src="BasicInfo/Agent/agentController.js"></script> 
+    <script src="BasicInfo/AgentCarrier/agentCarrierController.js"></script>
+    <script src="BasicInfo/Carrier/carrierController.js"></script>
+    <script src="BasicInfo/Customer/customerController.js"></script>
+    <script src="BasicInfo/Forwarder/forwarderController.js"></script> 
+    <script src="BasicInfo/Marketer/marketerController.js"></script>
+    <script src="BasicInfo/Packagetype/packagetypeController.js"></script>  
+    <script src="SalesMarketing/Negotiation/outboundNegotiationController.js"></script>
+    <script src="SalesMarketing/Negotiationplan/negotiationplanController.js"></script> 
+    <script src="SalesMarketing/Negotiationplanroute/negotiationplanrouteController.js"></script>
+    <script src="SalesMarketing/NegotiationplanrouteCF/negotiationplanrouteCFController.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,805 @@
+﻿<div data-ng-controller="outboundNegotiationController">
+
+    <div id="content">
+        <section id="widget-grid" class="">
+
+            <div class="row">
+
+                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12 sortable-grid ui-sortable">
+                    <div class="alert alert-success fade in" data-ng-show="showInsertMessage">
+
+                        <i class="fa-fw fa fa-check"></i>
+                        The new record inserted successfully.
+                    </div>
+
+                    <div class="alert alert-info fade in" data-ng-show="showUpdateMessage">
+
+                        <i class="fa-fw fa fa-check"></i>
+                        The record edited successfully.
+                    </div>
+
+                    <div class="jarviswidget jarviswidget-color-red jarviswidget-sortable" id="wid-id-0" data-widget-editbutton="false" data-widget-attstyle="jarviswidget-color-red" role="widget" style="">
+
+                        <div role="content">
+
+                            <div class="widget-body no-padding">
+
+                                <div id="dt_basic_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                                    <div class="dt-toolbar">
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div id="dt_basic_filter" class="dataTables_filter">
+                                                <label>
+                                                    <a title="Search the criteria" class="btn input-group-addon" style="float:left" data-ng-click="searchRecords()">  <i class="glyphicon glyphicon-search"></i></a>
+
+                                                    <input type="search" data-ng-model="filter" class="form-control" placeholder="Reference No..." aria-controls="dt_basic" />
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-success" id="open" style="float:right;width:80px" data-ng-click="newRecord()" title="Create a new record">
+                                            <i class="fa fa-plus"></i>
+                                            Create
+                                        </button>
+
+                                    </div>
+                                    <table id="tblMain" class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="dt_basic_info" style="width: 100%;">
+                                        <thead>
+                                            <tr role="row">
+                                                <th style="width:43px;"><i class="fa fa-fw fa fa-hashtag text-muted hidden-md hidden-sm hidden-xs"></i></th>
+                                                <th><i class="fa fa-fw text-muted hidden-md hidden-sm hidden-xs"></i> Refrence No</th>
+                                                <th>Contractor</th>
+                                                <th>Receipt</th>
+                                                <th>Delivery</th>
+                                                <th>Price Net/Payable</th>
+                                                <th>State</th>
+                                                <th>Negotiation Plans</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr data-ng-repeat="record in records" role="row" data-ng-dblclick="editRecord(record)" data-ng-class="getClass($index)">
+                                                <td style="text-align:center">
+                                                    {{ fromRow + $index  }}
+                                                </td>
+                                                <td>
+                                                    {{record.referenceNo }}
+                                                </td>
+                                                <td>
+                                                    {{record.contractorName }}
+                                                </td>
+                                                <td>
+                                                    {{record.placeofReceiptLocationName }}
+                                                </td>
+                                                <td>
+                                                    {{record.placeofDeliveryLocationName }}
+                                                </td>
+                                                <td>
+                                                    {{record.totalPayablePrice }}{{record.currencySymbol}}
+                                                </td>
+                                                <td>
+                                                    {{record.stateName}}
+                                                </td>
+                                                <td>
+                                                    <a data-ng-click="subAction1(record.id, record.referenceNo)"><i class="fa fa-lg fa-fw fa-plane"></i><span class="menu-item-parent">Negotiation Plans </span></a>
+                                                </td>
+                                            </tr>
+
+
+                                        </tbody>
+                                    </table>
+                                    <div class="dt-toolbar-footer">
+                                        <div class="col-sm-6 col-xs-12 hidden-xs">
+                                            <div class="dataTables_info" id="dt_basic_info" role="status" aria-live="polite">
+                                                Showing records between {{fromRow}} and {{toRow}} from total {{totalRecordCount}} record(s).
+
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6">
+
+
+                                            <div class="input-group">
+                                                <a title="First Page" class="btn input-group-addon" data-ng-click="getFirstPage()" style="float:left">  <i class="fa fa-fast-backward"></i> </a>
+                                                <a title="Previous Page" class="btn input-group-addon" data-ng-click="getPrevPage()" style="float:left">  <i class="fa fa-backward"></i></a>
+                                                <input type="number" data-ng-model="currentPage" class="form-control input-sm" title="Page No." style="width:100px;text-align:center;float:left" value="1" maxlength="8" />
+                                                <a title="Goto the page" class="btn input-group-addon btn-flat" data-ng-click="getCurrentPage()" style="float:left"> <i class="fa fa-hand-o-up"></i> </a>
+                                                <a title="Next Page" class="btn input-group-addon" style="float:left" data-ng-click="getNextPage()">  <i class="fa fa-forward"></i> </a>
+                                                <a title="Last Page" class="btn input-group-addon" style="float:left" data-ng-click="getLastPage()">  <i class="fa fa-fast-forward"></i></a>
+
+                                            </div>
+
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+    </div>
+
+    <div id="divNew" class="modal fade" role="dialog">
+        <div class="modal-dialog" style="width:700px">
+
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="jarviswidget jarviswidget-sortable" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false" role="widget">
+
+                        <header role="heading">
+                            <div class="jarviswidget-ctrls" role="menu">
+                                <a href="javascript:void(0);" class="button-icon jarviswidget-delete-btn close" data-dismiss="modal" rel="tooltip" title="" data-placement="bottom" data-original-title="Delete">
+                                    <i class="fa fa-times">
+
+                                    </i>
+                                </a>
+                            </div>
+
+                            <h2>{{modalTitle}} </h2>
+
+                            <span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span>
+                        </header>
+
+                        <div role="content">
+
+                            <!-- end widget edit box -->
+                            <!-- widget content -->
+                            <div class="widget-body no-padding">
+
+                                <form id="mainFormNew" class="smart-form" name="mainFormNew" novalidate="novalidate" data-ng-submit="insertRecord()">
+
+                                    <fieldset>
+
+                                        <div class="row">
+
+                                            <section class="col col-6">
+
+                                                <div class='select'>
+
+                                                    <label class="label">Place Reciept<span class="required">*</span></label>
+
+                                                    <div class='select' data-ng-class="{'has-error': mainFormNew.placeofReceiptLocations.$invalid && mainFormNew.placeofReceiptLocations.$dirty}">
+
+                                                        <select data-ng-model="record.placeofReceiptLocationId" name="placeofReceiptLocations" data-ng-options="item.id as item.text for item in record.placeofReceiptLocations" required>
+                                                            <option value="">(Select a Place Reciept)</option>
+                                                        </select><i></i>
+
+                                                        <div data-ng-show="mainFormNew.placeofReceiptLocations.$invalid && mainFormNew.placeofReceiptLocations.$dirty">
+                                                            <span class="help-block" data-ng-show="mainFormNew.placeofReceiptLocations.$error.required">A place must be selected!</span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </section>
+
+                                            <section class="col col-6">
+
+                                                <div class='select'>
+
+                                                    <label class="label">Place Delivery<span class="required">*</span></label>
+
+                                                    <div class='select' data-ng-class="{'has-error': mainFormNew.placeofDeliveryLocations.$invalid && mainFormNew.placeofDeliveryLocations.$dirty}">
+
+                                                        <select data-ng-model="record.placeofDeliveryLocationId" name="placeofDeliveryLocations" data-ng-options="item.id as item.text for item in record.placeofDeliveryLocations" required>
+                                                            <option value="">(Select a Place Delivery)</option>
+                                                        </select><i></i>
+
+                                                        <div data-ng-show="mainFormNew.placeofDeliveryLocations.$invalid && mainFormNew.placeofDeliveryLocations.$dirty">
+                                                            <span class="help-block" data-ng-show="mainFormNew.placeofDeliveryLocations.$error.required">A place must be selected!</span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </section>
+
+                                        </div>
+
+                                        <div class="row">
+
+                                            <section class="col col-6">
+
+                                                <label class="label">Payment Method<span class="required"></span></label>
+                                                <div class='inline-group'>
+
+
+                                                    <label class="radio">
+                                                        <input type="radio"  data-ng-model="record.isCostplus"  ng-change="record.totalNetPrice= record.isCostplus ? '' : record.totalNetPrice"   data-ng-value="true">
+                                                        <i></i> Cost Plus
+                                                    </label>
+
+
+                                                    <label class="radio">
+                                                        <input type="radio" data-ng-model="record.isCostplus" ng-change="record.costplusPercent= !record.isCostplus ? '' : record.costplusPercent"  data-ng-value="false">
+                                                        <i></i> Lump Sum
+                                                    </label>
+
+                                                </div>
+
+                                            </section>
+
+                                            <section class="col col-6">
+
+                                                <div class='select'>
+
+                                                    <label class="label">Negotiation State </label>
+                                                    <div class="dataTables_info"  >Under Negotiation</div>
+
+                                                </div>
+
+                                            </section>
+
+                                        </div>
+
+                                        <div class="row"> 
+
+                                            <section class="col col-3">
+
+                                                <label class="label">Cost Plus%</label>
+
+                                                <div class='input'>
+                                                    <input type="number" ng-required="record.isCostplus" ng-disabled='!record.isCostplus'  name="costplusPercent" placeholder="0<percent<=100" data-ng-model="record.costplusPercent">
+                                                    <p class="required" ng-show="mainFormNew.costplusPercent.$error.required">*</p>
+                                                 </div>
+
+                                            </section>
+
+                                            <section class="col col-3">
+
+                                                <label class="label">Lump Sum Price</label>
+
+                                                <div class='input'>
+                                                    <input type="number" ng-required="!record.isCostplus" name="totalNetPrice" ng-disabled='record.isCostplus' data-ng-model="record.totalNetPrice">
+                                                    <p class="required" ng-show="mainFormNew.totalNetPrice.$error.required">*</p>
+                                                </div>
+
+                                            </section>
+
+                                            <section class="col col-6">
+
+                                                <div class='select'>
+
+                                                    <label class="label">Currency<span class="required">*</span></label>
+
+                                                    <div class='select' data-ng-class="{'has-error': mainFormNew.currencies.$invalid && mainFormNew.currencies.$dirty}">
+
+                                                        <select data-ng-model="record.currencyId" name="currencies" data-ng-options="item.id as item.text for item in record.currencies" required>
+                                                            <option value="">(Select a currency)</option>
+                                                        </select><i></i>
+
+                                                        <div data-ng-show="mainFormNew.currencies.$invalid && mainFormNew.currencies.$dirty">
+                                                            <span class="help-block" data-ng-show="mainFormNew.currencies.$error.required">A currency must be selected!</span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </section>
+
+                                        </div>
+
+                                        <div class="row">
+
+                                            <section class="col col-6">
+
+                                                <div class='select'>
+
+                                                    <label class="label">Shipper<span class="required">*</span></label>
+
+                                                    <div class='select' data-ng-class="{'has-error': mainFormNew.shippers.$invalid && mainFormNew.shippers.$dirty}">
+
+                                                        <select data-ng-model="record.shipperId" name="shippers" data-ng-options="item.id as item.text for item in record.shippers" required>
+                                                            <option value="">(Select a shipper)</option>
+                                                        </select><i></i>
+
+                                                        <div data-ng-show="mainFormNew.shippers.$invalid && mainFormNew.shippers.$dirty">
+                                                            <span class="help-block" data-ng-show="mainFormNew.shippers.$error.required">A shipper must be selected!</span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </section> 
+
+                                            <section class="col col-6">
+
+                                                <div class='select'>
+
+                                                    <label class="label">Consignee<span class="required">*</span></label>
+
+                                                    <div class='select' data-ng-class="{'has-error': mainFormNew.consignees.$invalid && mainFormNew.consignees.$dirty}">
+
+                                                        <select data-ng-model="record.consigneeId" name="consignees" data-ng-options="item.id as item.text for item in record.consignees" required>
+                                                            <option value="">(Select a consignee)</option>
+                                                        </select><i></i>
+
+                                                        <div data-ng-show="mainFormNew.consignees.$invalid && mainFormNew.consignees.$dirty">
+                                                            <span class="help-block" data-ng-show="mainFormNew.consignees.$error.required">A consignee must be selected!</span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </section>  
+
+                                        </div>
+
+                                        <div class="row">
+
+                                            <section class="col col-6">
+
+                                                <div class='select'>
+
+                                                    <label class="label">Notify1</label>
+
+                                                    <div class='select'>
+
+                                                        <select data-ng-model="record.notify1Id" name="notifys1" data-ng-options="item.id as item.text for item in record.notifys1">
+                                                            <option value="">(Select a notify1)</option>
+                                                        </select><i></i>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </section>
+
+                                            <section class="col col-6">
+
+                                                <div class='select'>
+
+                                                    <label class="label">Notify2</label>
+
+                                                    <div class='select'>
+
+                                                        <select data-ng-model="record.notify2Id" name="notifys2" data-ng-options="item.id as item.text for item in record.notifys2">
+                                                            <option value="">(Select a notify2)</option>
+                                                        </select><i></i>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </section>
+
+                                        </div>
+
+                                        <div class="row">
+
+                                            <section class="col col-6">
+
+                                                <div class='select'>
+
+                                                    <label class="label">Marketer </label>
+
+                                                    <div class='select'>
+
+                                                        <select data-ng-model="record.marketerId" name="marketers" data-ng-options="item.id as item.text for item in record.marketers">
+                                                            <option value="">(Select a marketer)</option>
+                                                        </select><i></i>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </section>
+
+                                            <section class="col col-6">
+
+                                                <div class='select'>
+
+                                                    <label class="label">Contractor<span class="required">*</span></label>
+
+                                                    <div class='select' data-ng-class="{'has-error': mainFormNew.contractors.$invalid && mainFormNew.contractors.$dirty}">
+
+                                                        <select data-ng-model="record.contractor" name="contractors" data-ng-options="item.id as item.text for item in record.contractors" required>
+                                                            <option value="">(Select a contractor)</option>
+                                                        </select><i></i>
+
+                                                        <div data-ng-show="mainFormNew.contractors.$invalid && mainFormNew.contractors.$dirty">
+                                                            <span class="help-block" data-ng-show="mainFormNew.contractors.$error.required">A contractor must be selected!</span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </section>
+
+                                        </div>
+
+                                        <div class="row">
+
+                                            <section class="col col-lg-12">
+                                                <label class="label">Goods Description</label>
+                                                <label class="textarea">
+                                                    <textarea rows="3" class="custom-scroll" data-ng-model="record.goodsDesc" placeholder="Sample: Goods Desc"></textarea>
+                                                </label>
+                                            </section>
+
+                                        </div>
+
+                                    </fieldset>
+
+                                    <footer>
+
+                                        <button type="submit" id="save" class="btn btn-primary" title="Save the new record" data-ng-disabled="mainFormNew.$invalid || mainFormNew.placeofReceiptLocations.$pristine  || mainFormNew.placeofDeliveryLocations.$pristine  || mainFormNew.currencies.$pristine || mainFormNew.shippers.$pristine || mainFormNew.consignees.$pristine || mainFormNew.contractors.$pristine">
+                                            <i class="fa fa-check"></i>
+                                            Save
+                                        </button>
+
+                                        <button type="button" id="cancel" class="btn btn-default" style="float:right" data-dismiss="modal" title="Close the window without saving">
+                                            <i class="fa fa-times"></i>
+                                            Close
+                                        </button>
+
+
+                                    </footer>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <div id="divEdit" class="modal fade" role="dialog">
+        <div class="modal-dialog" style="width:700px">
+
+
+            <div class="modal-content">
+
+                <div class="modal-body">
+
+                    <div class="jarviswidget jarviswidget-sortable" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false" role="widget">
+
+                        <header role="heading">
+                            <div class="jarviswidget-ctrls" role="menu">
+
+                                <a href="javascript:void(0);" class="button-icon jarviswidget-delete-btn close" data-dismiss="modal" rel="tooltip" title="" data-placement="bottom" data-original-title="Delete">
+                                    <i class="fa fa-times">
+
+                                    </i>
+                                </a>
+                            </div>
+
+                            <h2>{{modalTitle}} </h2>
+
+                            <span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span>
+                        </header>
+
+
+                        <div role="content">
+                            <!-- end widget edit box -->
+                            <!-- widget content -->
+                            <div class="widget-body no-padding">
+
+                                <form id="mainFormEdit" class="smart-form" name="mainFormEdit" novalidate="novalidate" data-ng-submit="updateRecord()">
+                                    
+                                    <fieldset>
+
+                                        <div class="row">
+
+                                            <section class="col col-6">
+
+                                                <div class='select'>
+
+                                                    <label class="label">Place Reciept<span class="required">*</span></label>
+
+                                                    <div class='select' data-ng-class="{'has-error': mainFormEdit.placeofReceiptLocations.$invalid && mainFormEdit.placeofReceiptLocations.$dirty}">
+
+                                                        <select data-ng-model="record.placeofReceiptLocationId" name="placeofReceiptLocations" data-ng-options="item.id as item.text for item in record.placeofReceiptLocations" required>
+                                                            <option value="">(Select a Place Reciept)</option>
+                                                        </select><i></i>
+
+                                                        <div data-ng-show="mainFormEdit.placeofReceiptLocations.$invalid && mainFormEdit.placeofReceiptLocations.$dirty">
+                                                            <span class="help-block" data-ng-show="mainFormEdit.placeofReceiptLocations.$error.required">A place must be selected!</span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </section>
+
+                                            <section class="col col-6">
+
+                                                <div class='select'>
+
+                                                    <label class="label">Place Delivery<span class="required">*</span></label>
+
+                                                    <div class='select' data-ng-class="{'has-error': mainFormEdit.placeofDeliveryLocations.$invalid && mainFormEdit.placeofDeliveryLocations.$dirty}">
+
+                                                        <select data-ng-model="record.placeofDeliveryLocationId" name="placeofDeliveryLocations" data-ng-options="item.id as item.text for item in record.placeofDeliveryLocations" required>
+                                                            <option value="">(Select a Place Delivery)</option>
+                                                        </select><i></i>
+
+                                                        <div data-ng-show="mainFormEdit.placeofDeliveryLocations.$invalid && mainFormEdit.placeofDeliveryLocations.$dirty">
+                                                            <span class="help-block" data-ng-show="mainFormEdit.placeofDeliveryLocations.$error.required">A place must be selected!</span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </section>
+
+                                        </div>
+
+                                        <div class="row">
+
+                                            <section class="col col-6">
+
+                                                <label class="label">Payment Method<span class="required"></span></label>
+                                                <div class='inline-group'>
+
+
+                                                    <label class="radio">
+                                                        <input type="radio" data-ng-model="record.isCostplus" ng-change="record.totalNetPrice= record.isCostplus ? '' : record.totalNetPrice" data-ng-value="true">
+                                                        <i></i> Cost Plus
+                                                    </label>
+
+
+                                                    <label class="radio">
+                                                        <input type="radio" data-ng-model="record.isCostplus" ng-change="record.costplusPercent= !record.isCostplus ? '' : record.costplusPercent" data-ng-value="false">
+                                                        <i></i> Lump Sum
+                                                    </label>
+
+                                                </div>
+
+                                            </section>
+
+                                            <section class="col col-6">
+
+                                                <div class='select'>
+
+                                                    <label class="label">Negotiation State </label>
+
+                                                    <div class='select'>
+
+                                                        <select data-ng-model="record.state" name="states" data-ng-options="item.id as item.text for item in record.states" required></select><i></i>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </section>
+
+                                        </div>
+
+                                        <div class="row">
+
+                                            <section class="col col-3">
+
+                                                <label class="label">Lump Sum Price</label>
+
+                                                <div class='input'>
+                                                    <input type="number" ng-required="!record.isCostplus" name="totalNetPrice" ng-disabled='record.isCostplus' data-ng-model="record.totalNetPrice">
+                                                    <p class="required" ng-show="mainFormEdit.totalNetPrice.$error.required">*</p>
+                                                </div>
+
+                                            </section>
+
+                                            <section class="col col-3">
+
+                                                <label class="label">Cost Plus%</label>
+
+                                                <div class='input'>
+                                                    <input type="number" ng-required="record.isCostplus" ng-disabled='!record.isCostplus' name="costplusPercent" placeholder="0<percent<=100" data-ng-model="record.costplusPercent">
+                                                    <p class="required" ng-show="mainFormEdit.costplusPercent.$error.required">*</p>
+                                                </div>
+
+                                            </section>
+
+                                            <section class="col col-6">
+
+                                                <div class='select'>
+
+                                                    <label class="label">Currency<span class="required">*</span></label>
+
+                                                    <div class='select' data-ng-class="{'has-error': mainFormEdit.currencies.$invalid && mainFormEdit.currencies.$dirty}">
+
+                                                        <select data-ng-model="record.currencyId" name="currencies" data-ng-options="item.id as item.text for item in record.currencies" required>
+                                                            <option value="">(Select a currency)</option>
+                                                        </select><i></i>
+
+                                                        <div data-ng-show="mainFormEdit.currencies.$invalid && mainFormEdit.currencies.$dirty">
+                                                            <span class="help-block" data-ng-show="mainFormEdit.currencies.$error.required">A currency must be selected!</span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </section>
+
+                                        </div>
+
+                                        <div class="row">
+
+                                            <section class="col col-6">
+
+                                                <div class='select'>
+
+                                                    <label class="label">Shipper<span class="required">*</span></label>
+
+                                                    <div class='select' data-ng-class="{'has-error': mainFormEdit.shippers.$invalid && mainFormEdit.shippers.$dirty}">
+
+                                                        <select data-ng-model="record.shipperId" name="shippers" data-ng-options="item.id as item.text for item in record.shippers" required>
+                                                            <option value="">(Select a shipper)</option>
+                                                        </select><i></i>
+
+                                                        <div data-ng-show="mainFormEdit.shippers.$invalid && mainFormEdit.shippers.$dirty">
+                                                            <span class="help-block" data-ng-show="mainFormEdit.shippers.$error.required">A shipper must be selected!</span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </section>
+
+                                            <section class="col col-6">
+
+                                                <div class='select'>
+
+                                                    <label class="label">Consignee<span class="required">*</span></label>
+
+                                                    <div class='select' data-ng-class="{'has-error': mainFormEdit.consignees.$invalid && mainFormEdit.consignees.$dirty}">
+
+                                                        <select data-ng-model="record.consigneeId" name="consignees" data-ng-options="item.id as item.text for item in record.consignees" required>
+                                                            <option value="">(Select a consignee)</option>
+                                                        </select><i></i>
+
+                                                        <div data-ng-show="mainFormEdit.consignees.$invalid && mainFormEdit.consignees.$dirty">
+                                                            <span class="help-block" data-ng-show="mainFormEdit.consignees.$error.required">A consignee must be selected!</span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </section>
+
+                                        </div>
+
+                                        <div class="row">
+
+                                            <section class="col col-6">
+
+                                                <div class='select'>
+
+                                                    <label class="label">Notify1</label>
+
+                                                    <div class='select'>
+
+                                                        <select data-ng-model="record.notify1Id" name="notifys1" data-ng-options="item.id as item.text for item in record.notifys1">
+                                                            <option value="">(Select a notify1)</option>
+                                                        </select><i></i>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </section>
+
+                                            <section class="col col-6">
+
+                                                <div class='select'>
+
+                                                    <label class="label">Notify2</label>
+
+                                                    <div class='select'>
+
+                                                        <select data-ng-model="record.notify2Id" name="notifys2" data-ng-options="item.id as item.text for item in record.notifys2">
+                                                            <option value="">(Select a notify2)</option>
+                                                        </select><i></i>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </section>
+
+                                        </div>
+
+                                        <div class="row">
+
+                                            <section class="col col-6">
+
+                                                <div class='select'>
+
+                                                    <label class="label">Marketer </label>
+
+                                                    <div class='select'>
+
+                                                        <select data-ng-model="record.marketerId" name="marketers" data-ng-options="item.id as item.text for item in record.marketers">
+                                                            <option value="">(Select a marketer)</option>
+                                                        </select><i></i>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </section>
+
+                                            <section class="col col-6">
+
+                                                <div class='select'>
+
+                                                    <label class="label">Contractor<span class="required">*</span></label>
+
+                                                    <div class='select' data-ng-class="{'has-error': mainFormEdit.contractors.$invalid && mainFormEdit.contractors.$dirty}">
+
+                                                        <select data-ng-model="record.contractor" name="contractors" data-ng-options="item.id as item.text for item in record.contractors" required>
+                                                            <option value="">(Select a contractor)</option>
+                                                        </select><i></i>
+
+                                                        <div data-ng-show="mainFormEdit.contractors.$invalid && mainFormEdit.contractors.$dirty">
+                                                            <span class="help-block" data-ng-show="mainFormEdit.contractors.$error.required">A contractor must be selected!</span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </section>
+
+                                        </div>
+
+                                        <div class="row">
+
+                                            <section class="col col-lg-12">
+                                                <label class="label">Goods Description</label>
+                                                <label class="textarea">
+                                                    <textarea rows="3" class="custom-scroll" data-ng-model="record.goodsDesc" placeholder="Sample: Goods Desc"></textarea>
+                                                </label>
+                                            </section>
+
+                                        </div>
+
+                                    </fieldset>
+                                    <footer>
+
+                                        <button type="submit" id="save" class="btn btn-primary" title="Save the current record" data-ng-disabled="mainFormEdit.$invalid">
+                                            <i class="fa fa-check"></i>
+                                            Save
+                                        </button> 
+
+                                        <button type="button" id="cancel" class="btn btn-default" style="float:right" data-dismiss="modal" title="Close the window without saving">
+                                            <i class="fa fa-times"></i>
+                                            Close
+                                        </button>
+
+                                    </footer>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+

@@ -1,0 +1,208 @@
+﻿
+
+<!DOCTYPE html>
+<html lang="fa" id="extr-page" data-ng-app="mainApplication">
+<head>
+    <meta charset="utf-8">
+    <title> Satras MFTS </title>
+    <meta name="description" content="">
+    <meta name="author" content="Keiwan Azaryoun">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="/Content/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/Content/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/Content/smartadmin-production-plugins.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/Content/smartadmin-production.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/Content/smartadmin-skins.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/Content/smartadmin-rtl.min.css">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="/Content/Site.css">
+
+
+    <link rel="icon" type="image/png" href="/Images/favicon/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/Images/favicon/favicon-16x16.png" sizes="16x16" />
+
+
+    <!--<link rel="shortcut icon" href="/Images/favicon/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/Images/favicon/favicon.ico" type="image/x-icon">-->
+
+    <link rel="apple-touch-icon" href="/Images/splash/sptouch-icon-iphone.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/Images/splash/touch-icon-ipad.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/Images/splash/touch-icon-iphone-retina.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/Images/splash/touch-icon-ipad-retina.png">
+
+    <!-- iOS web-app metas : hides Safari UI Components and Changes Status Bar Appearance -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="apple-touch-startup-image" href="/Images/splash/ipad-landscape.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
+    <link rel="apple-touch-startup-image" href="/Images/splash/ipad-portrait.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
+    <link rel="apple-touch-startup-image" href="/Images/splash/iphone.png" media="screen and (max-device-width: 320px)">
+
+    <style>
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body class="animated fadeInDown" data-ng-controller="loginController">
+
+    <header id="header">
+
+        <div id="logo-group">
+            <span id="logo"> <img src="/Images/logo.png" alt="Satras"> </span>
+        </div>
+
+        <span id="extr-page-header-space"> <span class="hidden-mobile hiddex-xs">Do you need a new account?</span> <a href="register.html" class="btn btn-danger">Just Make it!</a> </span>
+
+    </header>
+
+    <div id="main" role="main">
+
+        <!-- MAIN CONTENT -->
+        <div id="content" class="container">
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-7 col-lg-8 hidden-xs hidden-sm">
+                    <h1 class="txt-color-red login-header-big">Satras</h1>
+                    <div class="hero">
+
+                        <div class="pull-left login-desc-box-l">
+                            <h4 class="paragraph-header">Now, it is the time to exprience the world's most advanced solution in multimodal transporation industry, Satrs. Satras provides the most intergrated way to cover the forwarding companies workflow as much as possible. it enjoys the most modern technolgy in concept and implementation. sign into system and dive and sink!</h4>
+                            <div class="login-app-icons">
+                                <a href="http://www.notrikaco.ir/" target="_blank" class="btn btn-danger btn-sm">Our Official Website</a>
+                                <a href="javascript:void(0);" class="btn btn-danger btn-sm">User Manual</a>
+                            </div>
+                        </div>
+
+                        <img src="/Images/demo/intro.png" class="pull-right display-image" alt="" style="width:210px">
+
+                    </div>
+
+
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
+                    <div class="well no-padding">
+                        <form class="smart-form client-form" id="mainForm" name="mainForm" novalidate data-ng-submit="Login()">
+                            <header>
+                                Sign in
+                            </header>
+
+                            <fieldset>
+
+                                <section>
+                                    <label class="label">
+                                        Username
+                                        <span class="required">*</span>
+
+                                    </label>
+
+                                    <div class='input' data-ng-class="{'has-error': mainForm.username.$invalid && mainForm.username.$dirty}">
+                                        <i class="icon-append fa fa-user"></i>
+                                        <input type="search" class="ctrl-l form-control" name="username" data-ng-model="User.username" placeholder="Sample: User1" required>
+
+                                        <div data-ng-show="mainForm.username.$invalid && mainForm.username.$dirty">
+                                            <span class="help-block" data-ng-show="mainForm.username.$error.required">Enter username!</span>
+                                        </div>
+                                    </div>
+
+
+
+                                </section>
+
+
+
+
+                                <section>
+                                    <label class="label">
+                                        Password
+                                        <span class="required">*</span>
+                                    </label>
+
+
+
+
+                                    <div class='input' data-ng-class="{'has-error': mainForm.password.$invalid && mainForm.password.$dirty}">
+                                        <i class="icon-append fa fa-lock"></i>
+                                        <input type="password" class="ctrl-l" name="password" data-ng-model="User.password" placeholder="Sample: 123456" required>
+
+                                        <div data-ng-show="mainForm.password.$invalid && mainForm.password.$dirty">
+                                            <span class="help-block" data-ng-show="mainForm.password.$error.required">Enter password!</span>
+                                        </div>
+                                    </div>
+
+
+
+                                </section>
+
+
+
+
+
+
+
+
+                            </fieldset>
+                            <footer data-ng-cloak>
+                                <button type="submit" class="btn btn-primary" data-ng-disabled="mainForm.$invalid">
+                                    Log in
+                                </button>
+
+
+                            </footer>
+                            <div class="alert alert-danger fade in" data-ng-show="IsInvalid">
+
+                                <i class="fa-fw fa fa-times"></i>
+                                Invalid username or password.
+                            </div>
+
+
+                        </form>
+
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="/Scripts/plugin/pace/pace.min.js"></script>
+    <script src="/Scripts/libs/jquery-2.1.1.min.js"></script>
+    <script src="/Scripts/libs/jquery-ui-1.10.3.min.js"></script>
+    <script src="/Scripts/app.config.js"></script>
+    <script src="/Scripts/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script>
+    <script src="/Scripts/bootstrap/bootstrap.min.js"></script>
+    <script src="/Scripts/angular/angular.min.js"></script>
+    <script src="/Scripts/app.min.js"></script>
+    <script src="/Scripts/angular/angular-route.min.js"></script>
+    <script src="/Scripts/angular/angular-animate.min.js"></script>
+    <script src="/Scripts/PKal/angularjs-datetime-picker.js"></script>
+    <script src="module.js"></script>
+    <script src="loginController.js"></script>
+
+    <div id="myLoadingModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myLoadingModalLabel">Receiving data from server...</h4>
+                </div>
+
+                <div class="modal-body text-center">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                            Please wait !
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+</html>
